@@ -1,0 +1,14 @@
+
+
+type RBM{T,V,H}:
+        W::Matrix{T}         
+        vis_bias::Vector{T}     
+        hid_bias::Vector{T}    
+end
+
+
+function RBM(T::Type, V::Type, H::Type,
+             n_vis::Int, n_hid::Int; sigma=0.01)
+    RBM{T,V,H}(map(T, rand(Normal(0, sigma), (n_hid, n_vis))),
+             zeros(n_vis), zeros(n_hid))
+end
