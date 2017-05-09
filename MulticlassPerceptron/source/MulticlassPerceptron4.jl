@@ -1,5 +1,5 @@
 
-module MulticlassPerceptron3
+module MulticlassPerceptron4
 
 export predict, MPerceptron, fit!
 
@@ -18,7 +18,7 @@ MPerceptron(n_classes::Int, n_features::Int) = MPerceptron(rand(n_classes,n_feat
 function accuracy(y_true, y_hat)
     acc = 0.
 
-    @simd for k = 1:length(y_true)
+    @inbounds for k = 1:length(y_true)
         if y_true[k] == y_hat[k]
             acc += 1.
         end
@@ -26,13 +26,11 @@ function accuracy(y_true, y_hat)
     return acc/length(y_hat)
 end
 
-
 function predict(h::MPerceptron, x, placeholder)
     placeholder .= A_mul_B!(placeholder, h.W,x) .+ h.b
-    y_hat = indmax(placeholder )
+    y_hat = indmax(placeholder)
     return y_hat
 end
-
 
 function Base.show{T}(io::IO, p::MPerceptron{T})
     n_classes  = p.n_classes
@@ -40,19 +38,19 @@ function Base.show{T}(io::IO, p::MPerceptron{T})
     print(io, "Perceptron{$T}(n_classes=$n_classes, n_features=$n_features)")
 end
 
-
 """
 function to fit a Perceptron
     '
-    fit!(h::Perceptron, X_tr::Array, y_tr::Array, n_epochs::Int, learning_rate=0.1)'
+    fit!(h::Perceptron, X_tr::Array, y_tr::Array, n_epochs::Int, learning_rate=0.1)
     '
 """
 function fit!(h::MPerceptron, X_tr::Array, y_tr::Array, n_epochs::Int, learning_rate=0.1)
 
     n_samples = size(X_tr, 2)
     y_signal_placeholder = zeros(h.b)
+    y_preds = zeros(n_samples)
 
-    for epoch in 1:n_epochs
+    @inbounds for epoch in 1:n_epochs
         for m in 1:n_samples
             x = view(X_tr,:,m)
             y_hat = predict(h, x, y_signal_placeholder)
@@ -64,13 +62,11 @@ function fit!(h::MPerceptron, X_tr::Array, y_tr::Array, n_epochs::Int, learning_
             end
         end
 
-        y_preds = []
-        for m in 1:n_samples
-            push!(y_preds, predict(h,   view(X_tr,:,m), y_signal_placeholder))
+        @inbounds for m in 1:n_samples
+             y_preds[m] = predict(h, view(X_tr,:,m), y_signal_placeholder)
         end
         println("Accuracy epoch ", epoch, " is :", accuracy(y_tr, y_preds))
     end
-
 end
 
 end
