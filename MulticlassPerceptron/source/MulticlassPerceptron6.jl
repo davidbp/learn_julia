@@ -1,5 +1,5 @@
 # http://julia-programming-language.2336112.n4.nabble.com/Usage-of-inbounds-td12573.html
-module MulticlassPerceptron5
+module MulticlassPerceptron6
 
 export predict, MPerceptron, fit!
 
@@ -25,8 +25,9 @@ function accuracy(y_true, y_hat)
     return acc/length(y_hat)
 end
 
+
 function predict(h::MPerceptron, x, placeholder)
-    placeholder .= A_mul_B!(placeholder, h.W,x) .+ h.b
+    placeholder .= A_mul_B!(placeholder, h.W, x) .+ h.b
     return indmax(placeholder)
 end
 
@@ -42,10 +43,11 @@ function to fit a Perceptron
 """
 function fit!(h::MPerceptron, X_tr::Array, y_tr::Array, n_epochs::Int, learning_rate=0.1)
 
+    T = typeof(X_tr)
     n_samples = size(X_tr, 2)
-    y_signal_placeholder = zeros(h.b)
-    y_preds = zeros(n_samples)
-    x = zeros(h.n_features)
+    y_signal_placeholder = zeros(T, h.b)
+    y_preds = zeros(T, n_samples)
+    x = zeros(T, h.n_features)
 
     @inbounds for epoch in 1:n_epochs
         for m in 1:n_samples
