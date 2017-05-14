@@ -3,7 +3,7 @@ using BenchmarkTools
 
 source_path = join(push!(split(pwd(),"/")[1:end-1],"source/" ),"/")
 
-if !contains(==,LOAD_PATH, source_path) 
+if !contains(==,LOAD_PATH, source_path)
     push!(LOAD_PATH, source_path)
 end
 
@@ -31,7 +31,7 @@ y_test = y_test + 1;
 T = Float32
 X_train = Array{T}((X_train - minimum(X_train))/(maximum(X_train) - minimum(X_train)))
 y_train = Array{Int64}(y_train)
-X_test = Array{T}(X_test - minimum(X_test))/(maximum(X_test) - minimum(X_test)) 
+X_test = Array{T}(X_test - minimum(X_test))/(maximum(X_test) - minimum(X_test))
 y_test = Array{Int64}(y_test);
 
 
