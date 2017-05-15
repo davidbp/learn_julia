@@ -1,5 +1,5 @@
-
-module MulticlassPerceptron4
+# http://julia-programming-language.2336112.n4.nabble.com/Usage-of-inbounds-td12573.html
+module MulticlassPerceptron6
 
 export predict, MPerceptron, fit!
 
@@ -11,13 +11,12 @@ type MPerceptron{T}
 end
 
 MPerceptron(n_classes::Int, n_features::Int) = MPerceptron(rand(n_classes,n_features),
-                                                                             zeros(n_classes),
-                                                                             n_classes,
-                                                                             n_features)
+                                                           zeros(n_classes),
+                                                           n_classes,
+                                                           n_features)
 
 function accuracy(y_true, y_hat)
     acc = 0.
-
     @inbounds for k = 1:length(y_true)
         if y_true[k] == y_hat[k]
             acc += 1.
@@ -26,8 +25,9 @@ function accuracy(y_true, y_hat)
     return acc/length(y_hat)
 end
 
+
 function predict(h::MPerceptron, x, placeholder)
-    placeholder .= A_mul_B!(placeholder, h.W,x) .+ h.b
+    placeholder .= A_mul_B!(placeholder, h.W, x) .+ h.b
     return indmax(placeholder)
 end
 
@@ -39,24 +39,24 @@ end
 
 """
 function to fit a Perceptron
-    '
     fit!(h::Perceptron, X_tr::Array, y_tr::Array, n_epochs::Int, learning_rate=0.1)
-    '
 """
 function fit!(h::MPerceptron, X_tr::Array, y_tr::Array, n_epochs::Int, learning_rate=0.1)
 
+    T = typeof(X_tr)
     n_samples = size(X_tr, 2)
-    y_signal_placeholder = zeros(h.b)
-    y_preds = zeros(n_samples)
+    y_signal_placeholder = zeros(T, h.b)
+    y_preds = zeros(T, n_samples)
+    x = zeros(T, h.n_features)
 
     @inbounds for epoch in 1:n_epochs
         for m in 1:n_samples
-            x = view(X_tr,:,m)
+            x .= X_tr[:,m]
             y_hat = predict(h, x, y_signal_placeholder)
             if y_tr[m] != y_hat
-                h.W[y_tr[m], :] .+= learning_rate .* x
+                h.W[y_tr[m], :] .+= learning_rate * x
                 h.b[y_tr[m]]     += learning_rate
-                h.W[y_hat, :]   .-= learning_rate .* x
+                h.W[y_hat, :]   .-= learning_rate * x
                 h.b[y_hat]       -= learning_rate
             end
         end

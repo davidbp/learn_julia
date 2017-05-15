@@ -45,18 +45,18 @@ function fit!(h::MPerceptron, X_tr::Array, y_tr::Array, n_epochs::Int, learning_
 
     T = typeof(X_tr)
     n_samples = size(X_tr, 2)
-    y_signal_placeholder = zeros(T, h.b)
-    y_preds = zeros(T, n_samples)
-    x = zeros(T, h.n_features)
+    y_signal_placeholder = zeros( h.b)
+    y_preds = zeros( n_samples)
+    x = zeros( h.n_features)
 
     @inbounds for epoch in 1:n_epochs
         for m in 1:n_samples
             x .= X_tr[:,m]
             y_hat = predict(h, x, y_signal_placeholder)
             if y_tr[m] != y_hat
-                h.W[y_tr[m], :] .+= learning_rate * x
+                h.W[y_tr[m], :] .+= learning_rate .* x
                 h.b[y_tr[m]]     += learning_rate
-                h.W[y_hat, :]   .-= learning_rate * x
+                h.W[y_hat, :]   .-= learning_rate .* x
                 h.b[y_hat]       -= learning_rate
             end
         end
