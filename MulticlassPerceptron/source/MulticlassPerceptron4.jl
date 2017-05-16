@@ -10,19 +10,17 @@ type MPerceptron{T}
     n_features::Int
 end
 
-MPerceptron(n_classes::Int, n_features::Int) = MPerceptron(rand(n_classes,n_features),
-                                                                             zeros(n_classes),
-                                                                             n_classes,
-                                                                             n_features)
+MPerceptron(T::Type, n_classes::Int, n_features::Int) = MPerceptron(rand(T, n_classes, n_features),
+                                                                    zeros(T, n_classes),
+                                                                    n_classes,
+                                                                    n_features)
+
 
 function accuracy(y_true, y_hat)
     acc = 0.
-
     @inbounds for k = 1:length(y_true)
-        if y_true[k] == y_hat[k]
-            acc += 1.
+            acc += y_true[k] == y_hat[k]
         end
-    end
     return acc/length(y_hat)
 end
 
@@ -45,9 +43,11 @@ function to fit a Perceptron
 """
 function fit!(h::MPerceptron, X_tr::Array, y_tr::Array, n_epochs::Int, learning_rate=0.1)
 
+    T = eltype(X_tr)
     n_samples = size(X_tr, 2)
-    y_signal_placeholder = zeros(h.b)
+    y_signal_placeholder = zeros(T, h.b)
     y_preds = zeros(n_samples)
+    #Y_pred = zeros(n_samples, n_features)
 
     @inbounds for epoch in 1:n_epochs
         for m in 1:n_samples
@@ -64,6 +64,9 @@ function fit!(h::MPerceptron, X_tr::Array, y_tr::Array, n_epochs::Int, learning_
         @inbounds for m in 1:n_samples
              y_preds[m] = predict(h, view(X_tr,:,m), y_signal_placeholder)
         end
+        #Y .= predict(h, view(X_tr), Y_pred)
+        #findmax(percep4.W * X_train,1)[2]
+
         println("Accuracy epoch ", epoch, " is :", accuracy(y_tr, y_preds))
     end
 end

@@ -10,10 +10,11 @@ type MPerceptron{T}
     n_features::Int
 end
 
-MPerceptron(n_classes::Int, n_features::Int) = MPerceptron(rand(n_classes,n_features),
-                                                           zeros(n_classes),
-                                                           n_classes,
-                                                           n_features)
+MPerceptron(T::Type, n_classes::Int, n_features::Int) = MPerceptron(rand(T, n_classes, n_features),
+                                                                    zeros(T, n_classes),
+                                                                    n_classes,
+                                                                    n_features)
+
 
 function accuracy(y_true, y_hat)
     acc = 0.
