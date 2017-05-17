@@ -3,9 +3,9 @@ module MulticlassPerceptron4
 
 export predict, MPerceptron, fit!
 
-immutable MPerceptron{T}
-    W::Array{T,2}
-    b::Vector{T}
+type MPerceptron{T}
+    W::Array{T}
+    b::Array{T}
     n_classes::Int
     n_features::Int
 end
