@@ -1,5 +1,5 @@
 
-module MulticlassPerceptron
+module MulticlassPerceptron1
 
 export predict, MPerceptron, fit!
 

@@ -18,7 +18,7 @@ MPerceptron(T::Type, n_classes::Int, n_features::Int) = MPerceptron(rand(T, n_cl
 function accuracy(y_true, y_hat)
     acc = 0.
 
-    @simd for k = 1:length(y_true)
+    @inbounds for k = 1:length(y_true)
         if y_true[k] == y_hat[k]
             acc += 1.
         end
@@ -52,7 +52,7 @@ function fit!(h::MPerceptron, X_tr::Array, y_tr::Array, n_epochs::Int, learning_
     n_samples = size(X_tr, 2)
     y_signal_placeholder = zeros(h.b)
 
-    for epoch in 1:n_epochs
+    @inbounds for epoch in 1:n_epochs
         for m in 1:n_samples
             x = view(X_tr,:,m)
             y_hat = predict(h, x, y_signal_placeholder)
