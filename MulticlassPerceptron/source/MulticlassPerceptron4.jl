@@ -40,7 +40,7 @@ function to fit a Perceptron
     fit!(h::Perceptron, X_tr::Array, y_tr::Array, n_epochs::Int, learning_rate=0.1)
     '
 """
-function fit!(h::MPerceptron, X_tr::Array, y_tr::Array, n_epochs::Int, learning_rate=0.1)
+function fit!(h::MPerceptron, X_tr::Array, y_tr::Array, n_epochs::Int, learning_rate=0.1; print_flag=false)
 
     T = eltype(X_tr)
     n_samples = size(X_tr, 2)
@@ -63,7 +63,7 @@ function fit!(h::MPerceptron, X_tr::Array, y_tr::Array, n_epochs::Int, learning_
              y_preds[m] = predict(h, view(X_tr,:,m), y_signal_placeholder)
         end
 
-        println("Accuracy epoch ", epoch, " is :", accuracy(y_tr, y_preds))
+        if print_flag println("Accuracy epoch ", epoch, " is :", accuracy(y_tr, y_preds)) end
     end
 end
 

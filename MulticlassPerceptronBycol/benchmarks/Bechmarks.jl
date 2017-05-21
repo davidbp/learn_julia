@@ -10,7 +10,7 @@ end
 T = Float32
 
 println("Starting Benchmark")
-
+begin
 using MulticlassPerceptron4
 using MulticlassPerceptron3
 using MulticlassPerceptron2
@@ -27,30 +27,37 @@ n_classes = 10
 n_features = 784
 
 println("Loading MNIST")
-
 X_train, y_train = MNIST.traindata();
 X_test, y_test = MNIST.testdata();
 y_train = y_train + 1
 y_test = y_test + 1;
-
-println("Scaling MNIST")
-
 X_train = Array{T}((X_train - minimum(X_train))/(maximum(X_train) - minimum(X_train)))
 y_train = Array{Int64}(y_train)
 X_test = Array{T}(X_test - minimum(X_test))/(maximum(X_test) - minimum(X_test))
 y_test = Array{Int64}(y_test);
 
-println("\n\tPrecompining and timing")
+println("\n\tMachine information")
 
-@time MulticlassPerceptron1.fit!(percep1, X_train, y_train, 1, 0.0001)
-@time MulticlassPerceptron2.fit!(percep2, X_train, y_train, 1, 0.0001)
-@time MulticlassPerceptron3.fit!(percep3, X_train, y_train, 1, 0.0001)
-@time MulticlassPerceptron4.fit!(percep4, X_train, y_train, 1, 0.0001)
+println("\n\tPeakflops:", peakflops())
 
-println("\n\tReal timming")
+println("\n\tversioninfo:\n")
+versioninfo()
 
-@time MulticlassPerceptron1.fit!(percep1, X_train, y_train, 1, 0.0001)
-@time MulticlassPerceptron2.fit!(percep2, X_train, y_train, 1, 0.0001)
-@time MulticlassPerceptron3.fit!(percep3, X_train, y_train, 1, 0.0001)
-@time MulticlassPerceptron4.fit!(percep4, X_train, y_train, 1, 0.0001)
+println("\n\tComputing benchmarks... ")
 
+results1 = @benchmark MulticlassPerceptron1.fit!(percep1, X_train, y_train, 1, 0.0001)
+results2 = @benchmark MulticlassPerceptron2.fit!(percep2, X_train, y_train, 1, 0.0001)
+results3 = @benchmark MulticlassPerceptron3.fit!(percep3, X_train, y_train, 1, 0.0001)
+results4 = @benchmark MulticlassPerceptron4.fit!(percep4, X_train, y_train, 1, 0.0001)
+
+
+println("\nPerceptron1---------------------")
+display(results1)
+println("\n\nPerceptron2---------------------")
+display(results2)
+println("\n\nPerceptron3---------------------")
+display(results3)
+println("\n\nPerceptron4---------------------")
+display(results4)
+println("\n")
+end
