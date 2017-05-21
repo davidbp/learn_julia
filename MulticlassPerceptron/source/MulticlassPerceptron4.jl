@@ -53,9 +53,9 @@ function fit!(h::MPerceptron, X_tr::Array, y_tr::Array, n_epochs::Int, learning_
             y_hat = predict(h, x, y_signal_placeholder)
             if y_tr[m] != y_hat
                 h.W[y_tr[m], :] .+= learning_rate .* x
-                h.b[y_tr[m]]     += learning_rate
+                h.b[y_tr[m]]    .+= learning_rate
                 h.W[y_hat, :]   .-= learning_rate .* x
-                h.b[y_hat]       -= learning_rate
+                h.b[y_hat]      .-= learning_rate
             end
         end
 

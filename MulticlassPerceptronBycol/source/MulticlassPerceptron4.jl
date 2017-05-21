@@ -10,7 +10,6 @@ immutable MPerceptron{T}
     n_features::Int
 end
 
-
 MPerceptron(T::Type, n_classes::Int, n_features::Int) = MPerceptron(rand(T, n_features, n_classes),
                                                                     zeros(T, n_classes),
                                                                     n_classes,
@@ -20,13 +19,13 @@ MPerceptron(T::Type, n_classes::Int, n_features::Int) = MPerceptron(rand(T, n_fe
 function accuracy(y_true, y_hat)
     acc = 0.
     @inbounds for k = 1:length(y_true)
-            acc += y_true[k] == y_hat[k]
-        end
+                    acc += y_true[k] == y_hat[k]
+              end
     return acc/length(y_hat)
 end
 
 function predict(h::MPerceptron, x, placeholder)
-    placeholder .= At_mul_B!(placeholder, h.W,x) .+ h.b
+    placeholder .= At_mul_B!(placeholder, h.W, x) .+ h.b
     return indmax(placeholder)
 end
 
@@ -51,18 +50,18 @@ function fit!(h::MPerceptron, X_tr::Array, y_tr::Array, n_epochs::Int, learning_
 
     @inbounds for epoch in 1:n_epochs
         for m in 1:n_samples
-            x = view(X_tr,:,m)
+            x = view(X_tr, :, m)
             y_hat = predict(h, x, y_signal_placeholder)
             if y_tr[m] != y_hat
-                h.W[:, y_tr[m]] .+= learning_rate * x
-                h.b[y_tr[m]]     += learning_rate
-                h.W[:, y_hat]   .-= learning_rate * x
-                h.b[y_hat]       -= learning_rate
+                h.W[:, y_tr[m]] .+= learning_rate .* x
+                h.b[y_tr[m]]    .+= learning_rate
+                h.W[:, y_hat]   .-= learning_rate .* x
+                h.b[y_hat]      .-= learning_rate
             end
         end
 
         @inbounds for m in 1:n_samples
-             y_preds[m] = predict(h, view(X_tr,:,m), y_signal_placeholder)
+             y_preds[m] = predict(h, view(X_tr, :, m), y_signal_placeholder)
         end
 
         println("Accuracy epoch ", epoch, " is :", accuracy(y_tr, y_preds))
