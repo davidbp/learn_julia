@@ -1,0 +1,19 @@
+ulia06 timing_arrays.jl 
+
+CPU times
+size: 100 x 100 seconds: 0.000133769 seconds
+size: 200 x 200 seconds: 0.000231602 seconds
+size: 300 x 300 seconds: 0.000557603 seconds
+size: 400 x 400 seconds: 0.000922378 seconds
+
+GPU times
+size: 100 x ERROR (unhandled task failure): OpenCL Error: OpenCL.Context error: 
+Stacktrace:
+ [1] raise_context_error(::String, ::String) at /Users/macpro/.julia/v0.6/OpenCL/src/context.jl:109
+ [2] macro expansion at /Users/macpro/.julia/v0.6/OpenCL/src/context.jl:148 [inlined]
+ [3] (::OpenCL.cl.##43#44)() at ./task.jl:335
+100 seconds: 9.95407535e-7 seconds
+size: 200 x 200 seconds: 8.31729e-10 seconds
+size: 300 x 300 seconds: 5.8994e-11 seconds
+size: 400 x 400 seconds: 5.0479999999999997e-11 seconds
+
