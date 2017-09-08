@@ -1,0 +1,6 @@
+Pkg.update()
+Pkg.add("MNIST")
+Pkg.add("SIMD")
+Pkg.add("DataFrames")
+Pkg.add("BenchmarkTools")
+Pkg.add("IJulia")
