@@ -7,7 +7,7 @@ import Base.show
 #### methods to export when this module is loaded
 export RBM, initialize_RBM, CDK, initialize_CDK, fit!, partial_fit!
 
-function sigmoid(x::Float32)
+function sigmoid{T}(x::T)
     return 1/(1 + exp(-x))
 end
 
