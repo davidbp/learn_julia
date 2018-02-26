@@ -1,0 +1,6 @@
+
+
+https://medium.com/@Jernfrost/go-inspired-tour-of-the-julia-programming-language-5c5a1622f177
+
+
+https://eli.thegreenplace.net/2015/memory-layout-of-multi-dimensional-arrays
