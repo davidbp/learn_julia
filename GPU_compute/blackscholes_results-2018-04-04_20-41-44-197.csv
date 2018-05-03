@@ -1,0 +1,15 @@
+"Backend","N","minT"
+"JLContext Intel(R) Xeon(R) CPU E5-1620 v2 @ 3.70GHz with 1 threads",10,1324.7
+"CLContext: AMD Radeon HD - FirePro D300 Compute Engine",10,161766.0
+"JLContext Intel(R) Xeon(R) CPU E5-1620 v2 @ 3.70GHz with 1 threads",100,9177.0
+"CLContext: AMD Radeon HD - FirePro D300 Compute Engine",100,160279.0
+"JLContext Intel(R) Xeon(R) CPU E5-1620 v2 @ 3.70GHz with 1 threads",1000,87233.0
+"CLContext: AMD Radeon HD - FirePro D300 Compute Engine",1000,161160.0
+"JLContext Intel(R) Xeon(R) CPU E5-1620 v2 @ 3.70GHz with 1 threads",10000,870790.0
+"CLContext: AMD Radeon HD - FirePro D300 Compute Engine",10000,167199.0
+"JLContext Intel(R) Xeon(R) CPU E5-1620 v2 @ 3.70GHz with 1 threads",100000,8.844228e6
+"CLContext: AMD Radeon HD - FirePro D300 Compute Engine",100000,533741.0
+"JLContext Intel(R) Xeon(R) CPU E5-1620 v2 @ 3.70GHz with 1 threads",1000000,9.0622336e7
+"CLContext: AMD Radeon HD - FirePro D300 Compute Engine",1000000,4.284151e6
+"JLContext Intel(R) Xeon(R) CPU E5-1620 v2 @ 3.70GHz with 1 threads",10000000,9.19184123e8
+"CLContext: AMD Radeon HD - FirePro D300 Compute Engine",10000000,4.1496741e7
