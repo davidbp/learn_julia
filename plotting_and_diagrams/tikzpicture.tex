@@ -1,0 +1,21 @@
+\documentclass[tikz]{standalone}
+\usepackage{fontspec}
+\setmainfont{Latin Modern Math}
+\usetikzlibrary{graphs}
+\usetikzlibrary{graphdrawing}
+
+\usegdlibrary{layered}
+\begin{document}
+\begin{tikzpicture}[]
+\graph [layered layout, ] {
+1/"1" [],
+2/"2" [],
+3/"3" [],
+4/"4" [],
+;
+1 -> [,] 2;
+2 -> [,] 3;
+};
+
+\end{tikzpicture}
+\end{document}
