@@ -50,8 +50,13 @@ adj_dict = keys_to_ints(adj_dict)
 
 t0 = time()
 println("Start Computing")
-triangles = generate_triangles(adj_dict)
-println("Number of triangles:", length(triangles))
-println("Total time", abs(time()-t0)) 
+
+triangles = 0
+for i in 1:100
+    triangles = generate_triangles(adj_dict)
+end
+
+println("Number of triangles: ", length(triangles))
+println("Total time: ", abs(time()-t0), " seconds") 
 
 

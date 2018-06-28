@@ -65,9 +65,10 @@ import time
 
 t0 = time.time()
 print("Start Computing")
-cycles = generate_triangles(adj_dict_)
+for i in range(1000):
+    cycles = generate_triangles_2(adj_dict_)
 cycles = list(cycles)
-print("Number of triangles: {}".format(len(cycles)))
+print("Number of triangles : {}".format(len(cycles)))
 print( "Total time: {} seconds".format(abs(t0- time.time()))) 
 
 
