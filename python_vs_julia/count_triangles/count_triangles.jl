@@ -1,62 +1,44 @@
 ### Count triangles
 
-function generate_triangles(nodes)
-    result = []
-    visited_ids = Set{Int}()
-    for (node_a_id, nodes_node_a_id) in nodes
-        temp_visited = Set()
-        for node_b_id in nodes_node_a_id
-            if node_b_id == node_a_id
-                println("ERROR")
-                break
+function count_triangles(g, isDirected)
+    nodes = length(g) 
+    count_Triangle = 0 #Initialize result 
+    # Consider every possible triplet of edges in graph 
+    for i in 1:nodes
+        for j in 1:nodes
+            for k in 1:nodes
+                # check the triplet if it satisfies the condition 
+                if i!=j && i!=k && j!=k && g[i][j]==1 && g[j][k]==1 && g[k][i]==1
+                    count_Triangle += 1
+                end
             end
-            if node_b_id in visited_ids
-                continue
-            end
-            for node_c_id in nodes[node_b_id]
-                if node_c_id in visited_ids
-                    continue
-                end
-                if node_c_id in temp_visited
-                    continue
-                end
-                if node_a_id in nodes[node_c_id]
-                    push!(result, [node_a_id, node_b_id, node_c_id])
-                else
-                    continue
-                end
-            end        
-            push!(temp_visited, node_b_id)
         end
-        push!(visited_ids, node_a_id)
     end
-    return result
+    # if graph is directed , division is done by 3  else division by 6 is done 
+    if isDirected==true
+        return count_Triangle/3 
+    else
+        return count_Triangle/6
+    end
 end
 
 
-function keys_to_ints(dict)
-    aux = Dict{Int,Array{Int}}()
-    for (k,v) in dict
-       aux[parse(k)] = v
-    end
-    return aux
-end
+# Load graph
+#using CSV
+#graph_table = CSV.read("graph.csv")
+#n_nodes = size(graph_table,1)
+#graph_list_of_lists = [Array(graph_table[i]) for i in 1:n_nodes ]
 
-using JSON
+graph = readlines("graph.csv")
+graph_list_of_lists = map(x-> parse.(Int,split(x,",")[2:end]), graph[2:end])
+#graph = map(x-> split(x,",")[2:end], graph[2:end])
+#graph = map(x-> parse.(Int,x), graph)
 
-aux = readlines("graph.json")
-adj_dict = JSON.parse(aux[1])
-adj_dict = keys_to_ints(adj_dict)
-
+# count trianges
 t0 = time()
+n_triangles = count_triangles(graph_list_of_lists[1:4], false)
 println("Start Computing")
-
-triangles = 0
-for i in 1:100
-    triangles = generate_triangles(adj_dict)
-end
-
-println("Number of triangles: ", length(triangles))
-println("Total time: ", abs(time()-t0), " seconds") 
-
+n_triangles = count_triangles(graph_list_of_lists, false)
+println("Number of triangles: ", n_triangles)
+println("Total time: ", abs(time()-t0), " seconds")
 
