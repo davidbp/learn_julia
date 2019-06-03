@@ -28,7 +28,7 @@ graph = [[0, 1, 1, 0],
 
 print ("The Number of triangles in undirected graph : %d" %countTriangle(graph, False)) 
   
-n_nodes = 500
+n_nodes = 800
 n_edges = 10
 
 G = networkx.barabasi_albert_graph(n_nodes, n_edges, seed=1) 
