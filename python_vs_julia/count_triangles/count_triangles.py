@@ -26,10 +26,11 @@ graph = [[0, 1, 1, 0],
          [1, 1, 0, 1], 
          [0, 1, 1, 0]] 
 
-print ("The Number of triangles in undirected graph : %d" %countTriangle(graph, False)) 
   
-n_nodes = 800
+n_nodes = 1000
 n_edges = 10
+
+print("The Number of nodes {}, number of expected edges per node: {} ".format(n_nodes, n_edges)) 
 
 G = networkx.barabasi_albert_graph(n_nodes, n_edges, seed=1) 
 adj_list = [(n, nbrdict) for n, nbrdict in G.adjacency()]
