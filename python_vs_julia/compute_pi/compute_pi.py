@@ -15,7 +15,7 @@ def compute_pi(N):
             n_landed_in_circle += 1.
     return (n_landed_in_circle / N) * 4.0
 
-N= 100000000
+N= 1000_000_000
 t0 = time.time()
 print("Start Computing")
 pi = compute_pi(N)

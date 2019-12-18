@@ -31,7 +31,7 @@ function compute_pi_parallel(N::Int; ncores::Int=8)
 end
 
 compute_pi(2)
-N= 1000_000_000
+N= 1_000_000_000
 t0 = time()
 println("Start Computing")
 aprox = compute_pi_parallel(N, ncores=4)
